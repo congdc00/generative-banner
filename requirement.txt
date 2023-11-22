@@ -1,0 +1,6 @@
+diffusers
+accelerate
+transformers
+loguru
+opencv-python
+
