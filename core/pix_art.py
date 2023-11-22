@@ -1,5 +1,5 @@
 from diffusers import PixArtAlphaPipeline
-    
+import torch 
 class PixArt_Model():
 
     def __init__(self, device, img_size):
