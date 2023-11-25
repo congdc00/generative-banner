@@ -2,5 +2,8 @@ diffusers
 accelerate
 transformers
 loguru
-opencv-python
-
+opencv-python 
+huggingface-hub==0.17.3
+bitsandbytes
+xformers
+chardet
