@@ -25,12 +25,12 @@ if __name__ == "__main__":
 
     for idx, (caption, name) in enumerate(zip(captions, bannerImage)):
         positive_promt = Translater.vie2eng(caption)
+        positive_promt = f"a banner vietnamese, {positive_promt}"
         negative_prompt = "extra digit, fewer digits, cropped, worst quality, low quality, glitch, deformed, mutated, ugly, disfigured"
         
-        image = model.gen(positive_promt, negative_prompt)
+        image = model.gen(positive_promt, negative_prompt="")
         image = image.crop((0, 1, 1024, 534))
 
         output_path = f"{OUTPUT_PATH}/{name}"
         image.save(output_path)
 
-        break

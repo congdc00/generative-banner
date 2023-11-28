@@ -4,10 +4,10 @@ from accelerate.utils import write_basic_config
 import os
 
 SCRIPT_PATH = "./core/diffusers/examples/dreambooth/train_dreambooth.py"
-MODEL_NAME="runwayml/stable-diffusion-v1-5"
+MODEL_NAME="stabilityai/stable-diffusion-xl-base-1.0"
 INSTANCE_DIR="./data/train/target/images/"
 CLASS_DIR = "./data/train/class/images/"
-OUTPUT_DIR="./checkpoints/"
+OUTPUT_DIR="./checkpoints/01/"
 
 if __name__ == "__main__":
     command = f"python {SCRIPT_PATH} --pretrained_model_name_or_path={MODEL_NAME} --instance_data_dir={INSTANCE_DIR} --class_data_dir={CLASS_DIR} --output_dir={OUTPUT_DIR} "
