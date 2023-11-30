@@ -1,16 +1,17 @@
-from diffusers import DiffusionPipeline, LCMScheduler, ConsistencyDecoderVAE, AutoencoderTiny 
+from diffusers import DiffusionPipeline, LCMScheduler, ConsistencyDecoderVAE, AutoencoderTiny, AutoPipelineForText2Image 
 import torch
 
 class SD_Model():
 
     def __init__(self, device, img_size):
         # model_id = "stabilityai/stable-diffusion-xl-base-1.0" 
-        model_id = "stabilityai/stable-diffusion-xl-base-1.0"
+        # self.model = AutoPipelineForText2Image.from_pretrained("stabilityai/sdxl-turbo", torch_dtype=torch.float16, variant="fp16")
         # vae = ConsistencyDecoderVAE.from_pretrained( "openai/consistency-decoder" , torch_dtype=torch.float16)
         self.model = DiffusionPipeline.from_pretrained(
-            model_id,
+            "stabilityai/stable-diffusion-xl-base-1.0",
             torch_dtype=torch.float16
         )
+
         self.model.vae = AutoencoderTiny.from_pretrained("madebyollin/taesdxl", torch_dtype=torch.float16)
         self.model.to(device)
 
@@ -31,11 +32,11 @@ class SD_Model():
         image = self.model(
             prompt = prompt,
             # strength=0.5,
-            # negative_prompt = negative_prompt,
+            negative_prompt = negative_prompt,
             num_inference_steps=steps,
             width = self.img_size[0],
             height = self.img_size[1],
             generator = self.generator,
-            guidance_scale = 0.8,
+            guidance_scale = 0,
         ).images[0]
         return image

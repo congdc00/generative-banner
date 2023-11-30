@@ -15,7 +15,7 @@ if __name__ == "__main__":
     command += "--prior_loss_weight=1.0 "
     command += "--instance_prompt='a banner vietnamese' "
     command += "--class_prompt='a banner'"
-    command += "--resolution=1024 "
+    command += "--resolution=1024"
     command += "--train_batch_size=1 "
     command += "--gradient_accumulation_steps=1 "
     command += "--gradient_checkpointing "
