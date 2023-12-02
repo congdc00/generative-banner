@@ -16,10 +16,10 @@ class SD_Model():
             lcm_model = "latent-consistency/lcm-lora-sdxl"
             free_u_config = [0.6, 0.4, 1.1, 1.2]
         else:
-            sd_model = "./saved_model/trained/model_02/"
+            sd_model = "/code/saved_models/trained/SD15_banner/"
             vae_model = "madebyollin/taesd"
             lcm_model = "latent-consistency/lcm-lora-sdv1-5"
-            free_u_config = [0.6, 0.4, 1.1, 1.2]
+            free_u_config = [1.5, 1.6, 0.9, 0.2]
         
         self.model = DiffusionPipeline.from_pretrained(
             sd_model,
@@ -28,12 +28,10 @@ class SD_Model():
 
         self.model.vae = AutoencoderTiny.from_pretrained(vae_model, torch_dtype=version)
         self.model.to(device)
-
-        
         self.generator = torch.Generator(device=device).manual_seed(0)
 
         # add FreeU
-        self.model.enable_freeu(s1=0.6, s2=0.4, b1=1.1, b2=1.2)
+        self.model.enable_freeu(s1=free_u_config[0], s2=free_u_config[1], b1=free_u_config[2], b2=free_u_config[3])
 
         # add LCM
         self.model.scheduler = LCMScheduler.from_config(self.model.scheduler.config)

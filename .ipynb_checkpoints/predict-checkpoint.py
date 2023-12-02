@@ -1,13 +1,15 @@
 from PIL import Image
 import numpy as np
 import cv2
-from utils.translate import Translater
+import os
 import pandas as pd
 from core.stable_diffusion import SD_Model
 from core.pix_art import PixArt_Model
 from utils.enhance_image import Enhancer
-IMG_SIZE = (1024, 536)
+from preprocessing.preprocess import process
 
+IMG_SIZE = (1024, 536)
+DEVICE = "cuda"
 PRIVATE_PATH  = "/data/private/"
 INPUT_PATH = f"{PRIVATE_PATH}info.csv"
 
@@ -25,7 +27,7 @@ class Model():
     def generate(self, prompt):
         positive_promt = prompt
         negative_prompt = "lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature"
-        image = model.gen(positive_promt, negative_prompt=negative_prompt)
+        image = self.model.gen(positive_promt, negative_prompt=negative_prompt)
         image = image.crop((0, 1, 1024, 534))
         
         return image
@@ -47,9 +49,18 @@ if __name__ == "__main__":
     
     # model 1
     model = Model("model_1")
+    os.makedirs(SUBMISSION1_PATH, exist_ok = True)
     for info, name_img in zip(list_info, bannerImage):
-        prompt = preprocess(info)
+        prompt = process(info)
         image = model.generate(prompt)
         image = model.enhanced(image)
         image.save(f"{SUBMISSION1_PATH}/{name_img}")
 
+    # model 2
+    model = Model("model_2")
+    os.makedirs(SUBMISSION2_PATH, exist_ok = True)
+    for info, name_img in zip(list_info, bannerImage):
+        prompt = process(info)
+        image = model.generate(prompt)
+        image = model.enhanced(image)
+        image.save(f"{SUBMISSION1_PATH}/{name_img}")
