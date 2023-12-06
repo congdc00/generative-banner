@@ -15,8 +15,8 @@ import spacy
 
 def clean_text(sentence):
     sentence = str(sentence).lower()
-    
-    sentence = re.sub(r'[.\-\/]', ' ', sentence)
+    sentence = sentence.replace(" - ", "-")
+    # sentence = re.sub(r'[.\-\/]', ' ', sentence)
     return sentence
 
 def translater(input):

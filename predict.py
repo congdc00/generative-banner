@@ -10,19 +10,19 @@ from preprocessing.preprocess import process
 
 IMG_SIZE = (1024, 536)
 DEVICE = "cuda"
-PRIVATE_PATH  = "/data/private/"
+PRIVATE_PATH  = "/home/congdc/hdd/Project/data/private/"
 INPUT_PATH = f"{PRIVATE_PATH}info.csv"
 
-SUBMISSION1_PATH = "/results/submission1/images"
-SUBMISSION2_PATH = "/results/submission2/images"
+SUBMISSION1_PATH = "/home/congdc/hdd/Project/results/submission1/images"
+SUBMISSION2_PATH = "/home/congdc/hdd/Project/results/submission2/images"
 
 class Model():
 
     def __init__(self, model_id):
         if model_id == "model_1":
-            self.model = SD_Model(DEVICE, IMG_SIZE, "sd15")
+            self.model = SD_Model(DEVICE, IMG_SIZE, "sd15_ver2")
         else:
-            self.model = PixArt_Model(DEVICE, IMG_SIZE)
+            self.model = SD_Model(DEVICE, IMG_SIZE, "sd15_ver1")
 
     def generate(self, prompt):
         positive_promt = prompt
